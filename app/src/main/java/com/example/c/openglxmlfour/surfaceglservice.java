@@ -12,12 +12,32 @@ import android.view.WindowManager;
 import android.widget.VideoView;
 
 public class surfaceglservice extends Service {
+
+   public  GLSurfaceView mGLView;
+
+    public  MyGLRenderer mRenderer;
+
+
     public surfaceglservice() {
     }
+
+
+
+
 
     @Override
     public void onCreate() {
         super.onCreate();
+
+        //MyGLRenderer mRenderer;
+
+        //mRenderer = new MyGLRenderer();
+
+        //setRenderer(mRenderer) ;
+
+
+
+
 
         WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
 
@@ -37,11 +57,23 @@ public class surfaceglservice extends Service {
         //   params.x = 0;
         //   params.y = 100;
 
+
+
+        //LayoutInflater inflater = LayoutInflater.from(mGLView);
+
         LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
         View mTopView =  li.inflate(R.layout.videoviewlayout, null);
+       // View mTopView1 = li.inflate(mGLView,null);
 
-        GLSurfaceView mGLView;
-        mGLView = new MyGLSurfaceView(this);
+
+        //mGLView = new MyGLSurfaceView(this);
+        mGLView = (GLSurfaceView) mTopView.findViewById(R.id.glsurfaceview);
+        mRenderer = new MyGLRenderer();
+        //mGlView.setEGLConte
+        mGLView.setEGLContextClientVersion(2);
+        mGLView.setRenderer(mRenderer);
+       // mGLView.requestRender(surfaceglservice);
+
       //  VideoView videoView =
       //          (VideoView) mTopView.findViewById(R.id.videoview);
       //  String vidAddress = "https://archive.org/download/ksnn_compilation_master_the_internet/ksnn_compilation_master_the_internet_512kb.mp4";
