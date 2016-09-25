@@ -33,7 +33,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
     public void onSurfaceCreated(GL10 unused, EGLConfig config) {
 
         // Set the background frame color
-        GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+
+       // GLES20.glViewport(5,4,7,3);
+
+
+      GLES20.glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+       // GLES20.glClearColor(0.0f,0.0f,0.0f,0.0f);
 
        // mTriangle = new Triangle();
         mSquare   = new Square();
@@ -59,12 +64,17 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         float[] scratch = new float[16];
 
         // Draw background color
+
+      //  GLES20.glViewport(5,4,7,3);
         GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT | GLES20.GL_DEPTH_BUFFER_BIT);
+        //GLES20.glClear(GLES20.GL_COLOR_BUFFER_BIT);
 
         // Set the camera position (View matrix)
-        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        //Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+        Matrix.setLookAtM(mViewMatrix, 0, 0, 0, -3, 0f, 0f, 0f, 0f, 1.0f, 1.0f);
 
         // Calculate the projection and view transformation
+       // Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
         Matrix.multiplyMM(mMVPMatrix, 0, mProjectionMatrix, 0, mViewMatrix, 0);
 
         // Draw square
@@ -77,12 +87,12 @@ public class MyGLRenderer implements GLSurfaceView.Renderer {
         // long time = SystemClock.uptimeMillis() % 4000L;
         // float angle = 0.090f * ((int) time);
 
-        Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, 1.0f);
+     //   Matrix.setRotateM(mRotationMatrix, 0, mAngle, 0, 0, 1.0f);
 
         // Combine the rotation matrix with the projection and camera view
         // Note that the mMVPMatrix factor *must be first* in order
         // for the matrix multiplication product to be correct.
-        Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
+      //  Matrix.multiplyMM(scratch, 0, mMVPMatrix, 0, mRotationMatrix, 0);
 
         // Draw triangle
         //mTriangle.draw(scratch);

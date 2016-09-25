@@ -17,18 +17,20 @@ public class MyGLSurfaceView extends GLSurfaceView {
         super(context);
 
 
-        setEGLContextClientVersion(2);
+       // setEGLContextClientVersion(2);
 
         // Set the Renderer for drawing on the GLSurfaceView
-        mRenderer = new MyGLRenderer();
-        setRenderer(mRenderer);
+       // mRenderer = new MyGLRenderer();
+      //  setRenderer(mRenderer);
 
         // Render the view only when there is a change in the drawing data
-        setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
+       // setRenderMode(GLSurfaceView.RENDERMODE_WHEN_DIRTY);
     }
 
     public MyGLSurfaceView(Context context, AttributeSet attrs) {
-        super(context, attrs);
+       super(context, attrs);
+
+
 
     }
 
@@ -36,16 +38,16 @@ public class MyGLSurfaceView extends GLSurfaceView {
     private float mPreviousX;
     private float mPreviousY;
 
-  //  @Override
+  // @Override
    // public boolean onTouchEvent(MotionEvent e) {
         // MotionEvent reports input details from the touch screen
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
 
-    //    float x = e.getX();
-    //    float y = e.getY();
+   //   float x = e.getX();
+    //   float y = e.getY();
 
-      //  switch (e.getAction()) {
+      // switch (e.getAction()) {
       //      case MotionEvent.ACTION_MOVE:
 
      //           float dx = x - mPreviousX;

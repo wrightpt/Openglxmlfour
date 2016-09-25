@@ -45,13 +45,14 @@ public class surfaceglservice extends Service {
 
         // chatHead.setImageResource(R.drawable.floating);
 
-        final WindowManager.LayoutParams params = new WindowManager.LayoutParams(
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.WRAP_CONTENT,
-                WindowManager.LayoutParams.TYPE_PHONE,
-                // WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-                WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
-                PixelFormat.TRANSLUCENT);
+      final WindowManager.LayoutParams params = new
+             WindowManager.LayoutParams(
+               WindowManager.LayoutParams.WRAP_CONTENT,
+               WindowManager.LayoutParams.WRAP_CONTENT,
+               WindowManager.LayoutParams.TYPE_PHONE,
+               WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
+             //  WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+               PixelFormat.TRANSLUCENT);
 
         //  params.gravity = Gravity.TOP | Gravity.LEFT;
         //   params.x = 0;
@@ -61,17 +62,26 @@ public class surfaceglservice extends Service {
 
         //LayoutInflater inflater = LayoutInflater.from(mGLView);
 
-        LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
-        View mTopView =  li.inflate(R.layout.videoviewlayout, null);
+      //  LayoutInflater li = (LayoutInflater) getSystemService(LAYOUT_INFLATER_SERVICE);
+       // View mTopView =  li.inflate(R.layout.videoviewlayout, null);
        // View mTopView1 = li.inflate(mGLView,null);
 
 
-        //mGLView = new MyGLSurfaceView(this);
-        mGLView = (GLSurfaceView) mTopView.findViewById(R.id.glsurfaceview);
+        mGLView = new MyGLSurfaceView(this);
+
+        //mGLView = (GLSurfaceView)
+
+        //mGLView = (GLSurfaceView) mTopView.findViewById(R.id.glsurfaceview);
         mRenderer = new MyGLRenderer();
         //mGlView.setEGLConte
         mGLView.setEGLContextClientVersion(2);
         mGLView.setRenderer(mRenderer);
+
+        WindowManager.LayoutParams params1 = (WindowManager.LayoutParams) mGLView.getLayoutParams();
+        params.width = 200;
+        params.height = 200;
+        //mGLView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
+     //   mGLView.setZOrderOnTop(true);
        // mGLView.requestRender(surfaceglservice);
 
       //  VideoView videoView =
@@ -80,8 +90,9 @@ public class surfaceglservice extends Service {
       //  Uri vidUri = Uri.parse(vidAddress);
       //  videoView.setVideoURI(vidUri);
 
+        windowManager.addView(mGLView, params);
+       // windowManager.addView(mGLView, new LayoutParams);
 
-        windowManager.addView(mTopView, params);
        // videoView.start();
         // MediaController vidControl = new MediaController(this);
 
