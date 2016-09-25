@@ -8,4 +8,5 @@ Java_com_example_c_openglxmlfour_MainActivity_stringFromJNI(
         jobject /* this */) {
     std::string hello = "Hello from C++";
     return env->NewStringUTF(hello.c_str());
+    
 }
