@@ -13,10 +13,12 @@ model {
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
             externalNativeBuild {
                 cmake {
-                    //cppFlags ""
                     cppFlags.addAll([
-                            ""
+                        //    "-std=gnu++11",
+                        //    "-fexceptions"
+                        //    "-Wunused-function"
                     ])
+
                 }
             }
         }
@@ -24,16 +26,32 @@ model {
             release {
                 minifyEnabled false
                 proguardFiles.add(file('proguard-android.txt'))
+
+
+                //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
+        ndk {
+            platformVersion = 21
+            moduleName = 'native-codec-jni'
+            toolchain = 'clang'
+            stl        = 'gnustl_static'
+            cppFlags.addAll(['-std=c++11','-Wall', '-UNDEBUG'])
+            ldLibs.addAll(['android', 'log',        // For android and log_print
+                           'OpenMAXAL', 'mediandk']) //for native media
+        }
+
+      //  ndk {
+       //     moduleName "native-codec-jni"
+      //  }
         externalNativeBuild {
             cmake {
                 path "CMakeLists.txt"
             }
         }
     }
-}
 
+}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {

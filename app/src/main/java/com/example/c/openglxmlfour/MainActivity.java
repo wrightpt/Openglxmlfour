@@ -1,6 +1,7 @@
 package com.example.c.openglxmlfour;
 
 import android.content.Intent;
+import android.content.res.AssetManager;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
@@ -29,7 +30,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
+        //createStreamingMediaPlayer(getResources()
 
 
         if(Build.VERSION.SDK_INT >= 23) {
@@ -82,4 +83,20 @@ public class MainActivity extends AppCompatActivity {
      * which is packaged with this application.
      */
     public native String stringFromJNI();
-}
+
+    static {
+        System.loadLibrary("native-codec-jni");
+    }
+  // public native String getMsgFromJni();
+
+    public static native void rewindStreamingMediaPlayer();
+    public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
+    //public  native boolean createStreamingMediaPlayer() ;
+  //      return createStreamingMediaPlayer(,);
+  //  }
+
+  //  public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
+    // new code done
+} // class MainActivity
+   // public native String stringFromJNI1();
+
