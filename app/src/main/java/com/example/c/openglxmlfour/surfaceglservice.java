@@ -17,6 +17,7 @@ public class surfaceglservice extends Service {
 
     public  MyGLRenderer mRenderer;
 
+    public WindowManager windowManager;
 
     public surfaceglservice() {
     }
@@ -36,10 +37,11 @@ public class surfaceglservice extends Service {
         //setRenderer(mRenderer) ;
 
 
+      windowManager   = (WindowManager) getSystemService(WINDOW_SERVICE);
 
 
 
-        WindowManager windowManager = (WindowManager) getSystemService(WINDOW_SERVICE);
+
 
         //chatHead = new ImageView(this);
 
@@ -78,8 +80,12 @@ public class surfaceglservice extends Service {
         mGLView.setRenderer(mRenderer);
 
         WindowManager.LayoutParams params1 = (WindowManager.LayoutParams) mGLView.getLayoutParams();
-        params.width = 200;
-        params.height = 200;
+        params.width = 400;
+        params.height = 400;
+
+       // MyGLSurfaceView.OnTouchListener
+
+       // MyGLSurfaceView.OnDragListener
         //mGLView.getHolder().setFormat(PixelFormat.TRANSLUCENT);
      //   mGLView.setZOrderOnTop(true);
        // mGLView.requestRender(surfaceglservice);
@@ -91,10 +97,20 @@ public class surfaceglservice extends Service {
       //  videoView.setVideoURI(vidUri);
 
         windowManager.addView(mGLView, params);
+
+
+      //  windowManager.removeView(mGLView);
        // windowManager.addView(mGLView, new LayoutParams);
 
        // videoView.start();
         // MediaController vidControl = new MediaController(this);
+
+    }
+
+    public void RemoveView(){
+
+        windowManager.removeView(mGLView);
+
 
     }
 

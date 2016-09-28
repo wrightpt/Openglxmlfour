@@ -1,12 +1,17 @@
 package com.example.c.openglxmlfour;
 
+import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
+import android.content.ServiceConnection;
 import android.content.res.AssetManager;
 import android.net.Uri;
 import android.opengl.GLSurfaceView;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.IBinder;
 import android.provider.Settings;
+import android.view.Surface;
 import android.widget.TextView;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -19,9 +24,13 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
-    static {
-        System.loadLibrary("native-lib");
-    }
+
+    public  GLSurfaceView mGLView;
+
+   // LocalService mService;
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,7 +42,7 @@ public class MainActivity extends AppCompatActivity {
         //createStreamingMediaPlayer(getResources()
 
 
-        if(Build.VERSION.SDK_INT >= 23) {
+        if (Build.VERSION.SDK_INT >= 23) {
             if (!Settings.canDrawOverlays(MainActivity.this)) {
                 Intent intent = new Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION,
                         Uri.parse("package:" + getPackageName()));
@@ -45,6 +54,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+             //   Intent intent = new Intent(MainActivity.this, surfaceglservice.class);
+            //    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+
                 startService(new Intent(MainActivity.this, surfaceglservice.class));
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -52,9 +64,42 @@ public class MainActivity extends AppCompatActivity {
         });
 
         // Example of a call to a native method
-        TextView tv = (TextView) findViewById(R.id.sample_text);
-        tv.setText(stringFromJNI());
-    }
+        // TextView tv = (TextView) findViewById(R.id.sample_text);
+        // tv.setText(stringFromJNI());
+
+
+        FloatingActionButton fabb = (FloatingActionButton) findViewById(R.id.fab1);
+        fabb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                getWindowManager().removeView(mGLView);
+
+                //   startService(new Intent(MainActivity.this, surfaceglservice.class));
+                //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
+                //           .setAction("Action", null).show();
+            }
+        });
+
+
+
+    //private ServiceConnection mConnection = new ServiceConnection() {
+
+     //   @Override
+      //  public void onServiceConnected(ComponentName className,
+      //                                 IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+     //       LocalBinder binder = (LocalBinder) service;
+      //      mService = binder.getService();
+      //      mBound = true;
+      //  }
+
+       // @Override
+       // public void onServiceDisconnected(ComponentName arg0) {
+       //     mBound = false;
+       // }
+    };
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,15 +127,18 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-    public native String stringFromJNI();
+   // public native String stringFromJNI();
 
-    static {
-        System.loadLibrary("native-codec-jni");
-    }
+   /// static {
+     //   System.loadLibrary("native-codec-jni");
+   // }
   // public native String getMsgFromJni();
 
     public static native void rewindStreamingMediaPlayer();
     public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
+    public static native void setPlayingStreamingMediaPlayer(boolean isPlaying);
+    public static native void shutdown();
+    public static native void setSurface(Surface surface);
     //public  native boolean createStreamingMediaPlayer() ;
   //      return createStreamingMediaPlayer(,);
   //  }

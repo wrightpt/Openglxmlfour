@@ -1,57 +1,73 @@
-apply plugin: 'com.android.model.application'
+apply plugin: 'com.android.application'
+//apply plugin: 'com.android.model.application'
 
-model {
+//model {
     android {
         compileSdkVersion 24
         buildToolsVersion "24.0.2"
         defaultConfig {
             applicationId "com.example.c.openglxmlfour"
-            minSdkVersion.apiLevel 15
-            targetSdkVersion.apiLevel 24
+            // minSdkVersion.apiLevel 15
+            minSdkVersion 15
+            // targetSdkVersion.apiLevel 24
+            targetSdkVersion 24
             versionCode 1
             versionName "1.0"
             testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+            ndk {
+                abiFilters 'armeabi'
+                //'x86', 'x86_64', 'armeabi', 'armeabi-v7a', 'arm64-v8a'
+            }
             externalNativeBuild {
                 cmake {
-                    cppFlags.addAll([
-                        //    "-std=gnu++11",
-                        //    "-fexceptions"
-                        //    "-Wunused-function"
-                    ])
-
+                    arguments '-DANDROID_PLATFORM=android-21',
+                            '-DANDROID_TOOLCHAIN=clang', '-DANDROID_STL=gnustl_static'
                 }
             }
+
+            // externalNativeBuild {
+            ////   cmake {
+            //      cppFlags.addAll([
+            ////           //    "-std=gnu++11",
+            //    "-fexceptions"
+            //    "-Wunused-function"
+            //   ])
+
+            // }
         }
+
         buildTypes {
             release {
                 minifyEnabled false
-                proguardFiles.add(file('proguard-android.txt'))
+                //proguardFiles.add(file('proguard-android.txt'))
 
 
-                //proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+                proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             }
         }
-        ndk {
-            platformVersion = 21
-            moduleName = 'native-codec-jni'
-            toolchain = 'clang'
-            stl        = 'gnustl_static'
-            cppFlags.addAll(['-std=c++11','-Wall', '-UNDEBUG'])
-            ldLibs.addAll(['android', 'log',        // For android and log_print
-                           'OpenMAXAL', 'mediandk']) //for native media
-        }
+        //   ndk {
+        //       platformVersion = 21
+        //       moduleName = 'native-codec-jni'
+        //       toolchain = 'clang'
+        //      stl        = 'gnustl_static'
+        //      cppFlags.addAll(['-std=c++11','-Wall', '-UNDEBUG'])
+        //      ldLibs.addAll(['android', 'log',        // For android and log_print
+        //                    'OpenMAXAL', 'mediandk']) //for native media
+        //  }
 
-      //  ndk {
-       //     moduleName "native-codec-jni"
-      //  }
-        externalNativeBuild {
+       externalNativeBuild {
             cmake {
-                path "CMakeLists.txt"
+              path "CMakeLists.txt"
             }
+
+            //  ndk {
+             //   moduleName "native-codec-jni"
+            //  }
+
         }
+
     }
 
-}
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
