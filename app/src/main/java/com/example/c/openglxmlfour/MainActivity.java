@@ -25,11 +25,12 @@ public class MainActivity extends AppCompatActivity {
 
     // Used to load the 'native-lib' library on application startup.
 
-    public  GLSurfaceView mGLView;
+    public GLSurfaceView mGLView;
 
-   // LocalService mService;
+   public surfaceglservice surfaceglservice;
 
-
+    boolean isBind = false;
+    // LocalService mService;
 
 
     @Override
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+
 
         //createStreamingMediaPlayer(getResources()
 
@@ -54,9 +57,11 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
-             //   Intent intent = new Intent(MainActivity.this, surfaceglservice.class);
-            //    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
+                //
+                //    bindService(intent, mConnection, Context.BIND_AUTO_CREATE);
 
+                Intent intent = new Intent(MainActivity.this, surfaceglservice.class);
+                bindService(intent,Mconnection,Context.BIND_AUTO_CREATE);
                 startService(new Intent(MainActivity.this, surfaceglservice.class));
                 Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                         .setAction("Action", null).show();
@@ -73,33 +78,63 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                getFirstServiceMessage();
 
-                getWindowManager().removeView(mGLView);
+
+                // getWindowManager().removeView(mGLView);
 
                 //   startService(new Intent(MainActivity.this, surfaceglservice.class));
                 //   Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 //           .setAction("Action", null).show();
             }
-        });
+        });}
+
+
+        //private ServiceConnection mConnection = new ServiceConnection() {
+
+        //   @Override
+        //  public void onServiceConnected(ComponentName className,
+        //                                 IBinder service) {
+        // We've bound to LocalService, cast the IBinder and get LocalService instance
+        //       LocalBinder binder = (LocalBinder) service;
+        //      mService = binder.getService();
+        //      mBound = true;
+        //  }
+
+        // @Override
+        // public void onServiceDisconnected(ComponentName arg0) {
+        //     mBound = false;
+        // }
+
+    public void getFirstServiceMessage() {
+
+        surfaceglservice.RemoveView();
 
 
 
-    //private ServiceConnection mConnection = new ServiceConnection() {
+    }
 
-     //   @Override
-      //  public void onServiceConnected(ComponentName className,
-      //                                 IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-     //       LocalBinder binder = (LocalBinder) service;
-      //      mService = binder.getService();
-      //      mBound = true;
-      //  }
+    private final ServiceConnection Mconnection = new ServiceConnection() {
+        @Override
+        public void onServiceConnected(ComponentName name, IBinder service) {
 
-       // @Override
-       // public void onServiceDisconnected(ComponentName arg0) {
-       //     mBound = false;
-       // }
+            surfaceglservice.LocalService localService = (surfaceglservice.LocalService) service;
+            surfaceglservice = localService.getService();
+
+
+          //  com.example.c.openglxmlfour.surfaceglservice.LocalService localService = (com.example.c.openglxmlfour.surfaceglservice.LocalService) service;
+          //  com.example.c.openglxmlfour.surfaceglservice = localService.getService();
+
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName name) {
+
+        }
     };
+
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -127,24 +162,29 @@ public class MainActivity extends AppCompatActivity {
      * A native method that is implemented by the 'native-lib' native library,
      * which is packaged with this application.
      */
-   // public native String stringFromJNI();
+    // public native String stringFromJNI();
 
-   /// static {
-     //   System.loadLibrary("native-codec-jni");
-   // }
-  // public native String getMsgFromJni();
-
+    /// static {
+    //   System.loadLibrary("native-codec-jni");
+    // }
+    // public native String getMsgFromJni();
     public static native void rewindStreamingMediaPlayer();
+
     public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
+
     public static native void setPlayingStreamingMediaPlayer(boolean isPlaying);
+
     public static native void shutdown();
+
     public static native void setSurface(Surface surface);
     //public  native boolean createStreamingMediaPlayer() ;
-  //      return createStreamingMediaPlayer(,);
-  //  }
+    //      return createStreamingMediaPlayer(,);
+    //  }
 
-  //  public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
+    //  public static native boolean createStreamingMediaPlayer(AssetManager assetMgr, String filename);
     // new code done
 } // class MainActivity
-   // public native String stringFromJNI1();
+// public native String stringFromJNI1();
+
+
 
